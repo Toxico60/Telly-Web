@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telly - Menos pantallas, más sueños</title>
+    <link href="https://fonts.googleapis.com/css2?family=Coiny&family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #2E3F55;
+            --accent-blue: #C6D9E4;
+            --card-blue: #4F7C8C;
+            --text-light: #F1ECE6;
+            --font-title: 'Coiny', cursive;
+            --font-body: 'Comfortaa', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--text-light);
+            color: var(--bg-dark);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { font-family: var(--font-title); font-weight: normal; }
+
+        /* --- Navbar --- */
+        nav { background-color: var(--bg-dark); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-links { display: flex; align-items: center; }
+        .nav-links a { color: var(--text-light); text-decoration: none; margin-left: 25px; font-weight: 700; font-size: 14px; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-blue); }
+        .btn-nav { background-color: var(--accent-blue); color: var(--bg-dark) !important; padding: 10px 24px; border-radius: 20px; font-family: var(--font-title); font-size: 16px; transition: transform 0.2s; }
+        .btn-nav:hover { transform: scale(1.05); }
+
+        /* --- Hero Section --- */
+        .hero { background: linear-gradient(to right, rgba(46, 63, 85, 0.95) 0%, rgba(46, 63, 85, 0.7) 45%, rgba(46, 63, 85, 0.1) 100%), url('Imagenes/NIÑAS_CON_TELLY.jpeg') center/cover no-repeat; color: var(--text-light); padding: 100px 5%; display: flex; align-items: center; min-height: 85vh; }
+        .hero-content { max-width: 600px; }
+        .hero-content h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; color: var(--text-light); }
+        .hero-content p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.95; }
+        .btn-primary { background-color: var(--accent-blue); color: var(--bg-dark); padding: 15px 30px; border-radius: 30px; text-decoration: none; font-family: var(--font-title); font-size: 1.2rem; display: inline-block; transition: transform 0.2s; }
+        .btn-primary:hover { transform: translateY(-3px); }
+
+        /* --- Cómo Funciona --- */
+        .steps-section { padding: 80px 5%; text-align: center; }
+        .steps-section h2 { font-size: 2.5rem; color: var(--bg-dark); margin-bottom: 50px; }
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .step-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(46, 63, 85, 0.05); text-align: center; }
+        .step-img { width: 100%; height: 200px; border-radius: 10px; background-color: var(--text-light); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; color: var(--card-blue); font-weight: 700; font-family: var(--font-body); }
+        .step-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .step-card:hover .step-img img { transform: scale(1.05); } /* Efecto hover en imagen */
+        .step-card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--card-blue); }
+
+        /* --- Beneficios --- */
+        .benefits-section { background-color: var(--bg-dark); color: var(--text-light); padding: 80px 5%; display: flex; align-items: center; gap: 50px; }
+        .benefits-content { flex: 1; }
+        .benefits-content h2 { font-size: 2.5rem; color: var(--accent-blue); margin-bottom: 20px; }
+        .benefits-content ul { list-style: none; margin-top: 20px; }
+        .benefits-content li { margin-bottom: 15px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+        .benefits-content li::before { content: '🌙'; }
+        .benefits-image { flex: 1; border-radius: 20px; overflow: hidden; height: 400px; background-color: var(--text-light); display: flex; align-items: center; justify-content: center; color: var(--bg-dark); }
+        .benefits-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- Footer --- */
+        footer { background-color: var(--bg-dark); color: var(--text-light); text-align: center; padding: 40px 5%; font-size: 0.9rem; border-top: 1px solid rgba(241, 236, 230, 0.1); }
+
+        /* =========================================
+           CLASES PARA ANIMACIONES JAVASCRIPT
+           ========================================= */
+        
+        /* Oculta los elementos inicialmente y los prepara para subir y aparecer */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        /* Cuando JS añade esta clase, el elemento aparece */
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Retrasos para que las tarjetas aparezcan una tras otra (efecto cascada) */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.3s; }
+        .delay-3 { transition-delay: 0.5s; }
+
+        /* Responsive */
+        @media (max-width: 900px) { .steps-grid { grid-template-columns: 1fr; } .benefits-section { flex-direction: column; } .hero { justify-content: center; text-align: center; background: linear-gradient(to bottom, rgba(46, 63, 85, 0.8), rgba(46, 63, 85, 0.9)), url('Imagenes/NIÑAS_CON_TELLY.jpeg') center/cover; } }
+        @media (max-width: 768px) { .nav-links { display: none; } .hero-content h1 { font-size: 2.8rem; } }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="index.html" class="logo-container">
+            <img src="Imagenes/Isotipo Telly.png" alt="Isotipo Telly" style="object-fit: contain; width: 45px; height: 45px;">
+            <span style="font-family: var(--font-title); font-size: 24px; color: var(--text-light); letter-spacing: 2px;">TELLY</span>
+        </a>
+        
+        <div class="nav-links">
+            <a href="#como-funciona" class="scroll-link">Cómo funciona</a>
+            <a href="#beneficios" class="scroll-link">Beneficios</a>
+            <a href="equipo.html">Equipo</a>
+            <a href="cuenta.html">Mi Cuenta</a>
+            <a href="compra.html" class="btn-nav">Adquiere Telly</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content fade-in-up visible">
+            <h1>Menos pantallas, más sueños.</h1>
+            <p>Telly es el sistema que ayuda a tus hijos a prepararse para dormir de forma natural. Sin bloqueos abruptos, sin conflictos. Solo una rutina de calma guiada por su propio compañero de noche.</p>
+            <a href="#como-funciona" class="btn-primary scroll-link">Descubre el sistema</a>
+        </div>
+    </section>
+
+    <!-- Cómo Funciona (Renders) -->
+    <section id="como-funciona" class="steps-section">
+        <h2 class="fade-in-up">¿Cómo funciona Telly?</h2>
+        
+        <div class="steps-grid">
+            <div class="step-card fade-in-up delay-1">
+                <div class="step-img">
+                    <img src="Imagenes/RENDER_TRES_CUARTOS.png" alt="Render solo de Telly">
+                </div>
+                <h3>1. La Base Física</h3>
+                <p>Tu iPad se desliza de forma segura en un soporte impreso en 3D que transforma el dispositivo en un adorable compañero, dándole a la tablet un "hogar" a la hora de dormir.</p>
+            </div>
+
+            <div class="step-card fade-in-up delay-2">
+                <div class="step-img">
+                    <img src="Imagenes/APP_1.png" alt="La App del Niño" onerror="this.onerror=null; this.src='Imagenes/APP_1.jpg'; this.onerror=function(){this.src='Imagenes/APP_1.jpeg'};">
+                </div>
+                <h3>2. La App del Niño</h3>
+                <p>La interfaz animada guía al niño a través de su rutina. A la hora programada, la pantalla 'se duerme' gradualmente, pasando a tonos cálidos hasta apagarse con suavidad.</p>
+            </div>
+
+            <div class="step-card fade-in-up delay-3">
+                <div class="step-img">
+                    <img src="Imagenes/APP_PARENTAL.png" alt="Control Parental" onerror="this.onerror=null; this.src='Imagenes/APP_PARENTAL.jpg'; this.onerror=function(){this.src='Imagenes/APP_PARENTAL.jpeg'};">
+                </div>
+                <h3>3. Control Parental</h3>
+                <p>Desde tu propio teléfono, configuras los horarios de sueño y la duración de la rutina de forma invisible, evitando bloqueos sorpresa y las temidas rabietas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios (Foto Lifestyle) -->
+    <section id="beneficios" class="benefits-section">
+        <div class="benefits-content fade-in-up">
+            <h2>Diseñado para la calma, no para la vigilancia</h2>
+            <p>A diferencia de las apps de control parental tradicionales que se sienten como un "castigo", Telly utiliza psicología positiva y el entorno físico para cambiar la relación de los niños con la pantalla.</p>
+            <ul>
+                <li>Transiciones suaves que respetan el reloj biológico.</li>
+                <li>Reduce la ansiedad de separación con el dispositivo.</li>
+                <li>Fomenta la autonomía en la rutina nocturna.</li>
+                <li>Diseño libre de distracciones y luz azul.</li>
+            </ul>
+        </div>
+        <div class="benefits-image fade-in-up delay-2">
+            <img src="Imagenes/NIÑA_DORMIDA_RELAJADA.jpeg" alt="Niña durmiendo relajada">
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div style="margin-bottom: 20px;">
+            <img src="Imagenes/Isotipo Telly.png" alt="Isotipo Telly" style="object-fit: contain; width: 30px; height: 30px; vertical-align: middle; margin-right: 10px;">
+            <span style="font-family: var(--font-title); font-size: 20px; letter-spacing: 1px; vertical-align: middle;">TELLY</span>
+        </div>
+        <p>Menos pantallas, más sueños.</p>
+        <div style="margin-top: 20px;">
+            <a href="equipo.html" style="color: var(--text-light); text-decoration: none; margin: 0 10px; font-size: 14px;">Equipo</a>
+            <a href="compra.html" style="color: var(--text-light); text-decoration: none; margin: 0 10px; font-size: 14px;">Adquiere Telly</a>
+        </div>
+        <p style="margin-top: 20px; opacity: 0.6; font-size: 12px;">© 2026 Telly. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPT DE ANIMACIONES INTERACTIVAS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            /* 1. ANIMACIÓN DE APARICIÓN AL HACER SCROLL (Scroll Reveal) */
+            // Creamos un observador que detecta cuando un elemento entra en la pantalla
+            const observerOptions = {
+                threshold: 0.15, // Se activa cuando el 15% del elemento es visible
+                rootMargin: "0px 0px -50px 0px" // Margen inferior para que aparezca un poco antes
+            };
+
+            const observer = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    // Si el elemento entra en la pantalla, le añadimos la clase 'visible'
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Dejamos de observarlo para que la animación solo ocurra una vez
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Buscamos todos los elementos con la clase 'fade-in-up' y los observamos
+            const faders = document.querySelectorAll('.fade-in-up');
+            faders.forEach(fader => {
+                observer.observe(fader);
+            });
+
+            /* 2. DESPLAZAMIENTO SUAVE PARA EL MENÚ (Smooth Scroll) */
+            // Al hacer clic en "Cómo funciona" o "Beneficios", baja suavemente en vez de saltar de golpe
+            const scrollLinks = document.querySelectorAll('.scroll-link');
+            
+            scrollLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Obtenemos el ID de la sección a la que queremos ir (ej: #como-funciona)
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if(targetSection) {
+                        // Desplazamiento suave con un pequeño cálculo para que el menú fijo no tape el título
+                        const navHeight = document.querySelector('nav').offsetHeight;
+                        const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

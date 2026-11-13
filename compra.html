@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adquiere Telly - Menos pantallas, más sueños</title>
+    <link href="https://fonts.googleapis.com/css2?family=Coiny&family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #2E3F55;
+            --accent-blue: #C6D9E4;
+            --card-blue: #4F7C8C;
+            --text-light: #F1ECE6;
+            --font-title: 'Coiny', cursive;
+            --font-body: 'Comfortaa', sans-serif;
+            --price-color: #E07A5F;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background-color: var(--text-light); color: var(--bg-dark); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+        h1, h2, h3 { font-family: var(--font-title); font-weight: normal; }
+
+        nav { background-color: var(--bg-dark); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-links { display: flex; align-items: center; }
+        .nav-links a { color: var(--text-light); text-decoration: none; margin-left: 25px; font-weight: 700; font-size: 14px; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-blue); }
+        .btn-nav { background-color: var(--accent-blue); color: var(--bg-dark) !important; padding: 10px 24px; border-radius: 20px; font-family: var(--font-title); font-size: 16px; transition: transform 0.2s; }
+        .btn-nav:hover { transform: scale(1.05); }
+
+        .product-section { flex-grow: 1; padding: 60px 5%; max-width: 1200px; margin: 0 auto; width: 100%; }
+        .product-container { display: flex; gap: 50px; align-items: flex-start; }
+        
+        .product-gallery { flex: 1; width: 100%; max-width: 600px; }
+        .main-image { width: 100%; height: 450px; background-color: white; border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 10px 30px rgba(46, 63, 85, 0.05); margin-bottom: 20px; }
+        .main-image img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.2s ease-in-out; }
+        .thumbnail-list { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; }
+        .thumbnail { width: 80px; height: 80px; border-radius: 12px; background-color: white; cursor: pointer; border: 2px solid transparent; overflow: hidden; flex-shrink: 0; transition: border-color 0.2s, transform 0.2s; }
+        .thumbnail:hover { transform: translateY(-2px); }
+        .thumbnail.active { border-color: var(--card-blue); }
+        .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+
+        .product-details { flex: 1; display: flex; flex-direction: column; }
+        .product-title { font-size: 2.5rem; color: var(--bg-dark); margin-bottom: 10px; line-height: 1.2; }
+        .product-price { font-size: 2rem; color: var(--card-blue); font-weight: 700; margin-bottom: 20px; }
+        .product-description { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.6; }
+        .product-features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+        .feature-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--bg-dark); font-weight: 700; }
+        .feature-icon { font-size: 1.2rem; }
+        
+        .add-to-cart-btn { background-color: var(--card-blue); color: var(--text-light); border: none; padding: 18px; border-radius: 30px; font-family: var(--font-title); font-size: 1.3rem; cursor: pointer; transition: background-color 0.3s, transform 0.2s; width: 100%; text-align: center; }
+        .add-to-cart-btn:hover { background-color: var(--bg-dark); transform: translateY(-2px); }
+
+        .trust-section { background-color: white; border-radius: 20px; padding: 30px; margin-top: 40px; box-shadow: 0 10px 30px rgba(46, 63, 85, 0.05); }
+        .payment-methods { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 20px; flex-wrap: wrap; }
+        .payment-pill { background-color: #f5f5f5; padding: 5px 15px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; color: #555; border: 1px solid #e0e0e0; }
+        .trust-benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; }
+        .trust-item { display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--card-blue); font-weight: 700; padding: 0 10px; }
+        .trust-item:not(:last-child) { border-right: 1px solid #eee; }
+
+        footer { background-color: var(--bg-dark); color: var(--text-light); text-align: center; padding: 40px 5%; font-size: 0.9rem; border-top: 1px solid rgba(241, 236, 230, 0.1); }
+
+        @media (max-width: 900px) { .product-container { flex-direction: column; } .product-gallery, .product-details { width: 100%; max-width: 100%; } }
+        @media (max-width: 768px) { .nav-links { display: none; } .product-features { grid-template-columns: 1fr; } .trust-benefits { grid-template-columns: 1fr; } .trust-item:not(:last-child) { border-right: none; border-bottom: 1px solid #eee; padding-bottom: 15px; } .trust-item { padding: 15px 0 0 0; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo-container">
+            <img src="Imagenes/Isotipo Telly.png" alt="Isotipo Telly" style="object-fit: contain; width: 45px; height: 45px;">
+            <span style="font-family: var(--font-title); font-size: 24px; color: var(--text-light); letter-spacing: 2px;">TELLY</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html#como-funciona">Cómo funciona</a>
+            <a href="index.html#beneficios">Beneficios</a>
+            <a href="equipo.html">Equipo</a>
+            <a href="cuenta.html">Mi Cuenta</a>
+            <a href="compra.html" class="btn-nav">Adquiere Telly</a>
+        </div>
+    </nav>
+
+    <section class="product-section">
+        <div class="product-container">
+            <!-- Izquierda: Galería -->
+            <div class="product-gallery">
+                <div class="main-image">
+                    <!-- Imagen principal por defecto -->
+                    <img id="main-product-image" src="Imagenes/RENDER_FRENTE.png" alt="Soporte Telly Frente">
+                </div>
+                
+                <div class="thumbnail-list">
+                    <!-- Cada miniatura tiene un data-image que guarda la ruta de la imagen que debe mostrar en grande -->
+                    <div class="thumbnail active" data-image="Imagenes/RENDER_FRENTE.png">
+                        <img src="Imagenes/RENDER_FRENTE.png" alt="Frente">
+                    </div>
+                    <div class="thumbnail" data-image="Imagenes/RENDER_TRES_CUARTOS.png">
+                        <img src="Imagenes/RENDER_TRES_CUARTOS.png" alt="Tres cuartos">
+                    </div>
+                    <div class="thumbnail" data-image="Imagenes/RENDER_ATRAS.jpeg">
+                        <img src="Imagenes/RENDER_ATRAS.jpeg" alt="Atras">
+                    </div>
+                    <div class="thumbnail" data-image="Imagenes/NIÑA_DORMIDA_RELAJADA.jpeg">
+                        <img src="Imagenes/NIÑA_DORMIDA_RELAJADA.jpeg" alt="Lifestyle">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Derecha: Detalles -->
+            <div class="product-details">
+                <h1 class="product-title">Soporte Telly Base</h1>
+                <div class="product-price">$899 MXN</div>
+                
+                <p class="product-description">
+                    Conoce el mejor compañero de noche para tus hijos. Un soporte físico impreso en 3D que transforma tu iPad en una experiencia libre de estrés. <br><br>
+                    Diseñado para manos pequeñas y rutinas tranquilas. El soporte físico acuna la tablet y, en conjunto con la aplicación de Telly, guía a los niños hacia el sueño sin bloqueos abruptos ni distracciones de luz azul.
+                </p>
+
+                <div class="product-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">🖨️</span>
+                        <span>Base resistente impresa en 3D con cajón funcional</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📱</span>
+                        <span>Compatible con iPad (modelos seleccionados)</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🌙</span>
+                        <span>App infantil sin luz azul ni alertas</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🔒</span>
+                        <span>Control parental invisible vía smartphone</span>
+                    </div>
+                </div>
+
+                <button class="add-to-cart-btn">Añadir al carrito</button>
+
+                <div class="trust-section">
+                    <div class="payment-methods">
+                        <span class="payment-pill">Apple Pay</span>
+                        <span class="payment-pill">Google Pay</span>
+                        <span class="payment-pill">PayPal</span>
+                        <span class="payment-pill">Visa</span>
+                        <span class="payment-pill">Mastercard</span>
+                    </div>
+                    <div class="trust-benefits">
+                        <div class="trust-item">
+                            <span style="font-size: 1.5rem;">🚚</span>
+                            <span>Envío gratis en compras mayores a $1,500</span>
+                        </div>
+                        <div class="trust-item">
+                            <span style="font-size: 1.5rem;">📦</span>
+                            <span>Devoluciones fáciles de 30 días</span>
+                        </div>
+                        <div class="trust-item">
+                            <span style="font-size: 1.5rem;">💳</span>
+                            <span>Pago a meses sin intereses</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div style="margin-bottom: 20px;">
+            <img src="Imagenes/Isotipo Telly.png" alt="Isotipo Telly" style="object-fit: contain; width: 30px; height: 30px; vertical-align: middle; margin-right: 10px;">
+            <span style="font-family: var(--font-title); font-size: 20px; letter-spacing: 1px; vertical-align: middle;">TELLY</span>
+        </div>
+        <p>Menos pantallas, más sueños.</p>
+        <div style="margin-top: 20px;">
+            <a href="equipo.html" style="color: var(--text-light); text-decoration: none; margin: 0 10px; font-size: 14px;">Equipo</a>
+            <a href="compra.html" style="color: var(--text-light); text-decoration: none; margin: 0 10px; font-size: 14px;">Adquiere Telly</a>
+        </div>
+        <p style="margin-top: 20px; opacity: 0.6; font-size: 12px;">© 2026 Telly. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPT DE JAVASCRIPT PARA ANIMAR LA GALERÍA -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtenemos la etiqueta <img> principal y todos los cuadros de las miniaturas
+            const mainImage = document.getElementById("main-product-image");
+            const thumbnails = document.querySelectorAll(".thumbnail");
+
+            // Recorremos cada miniatura para agregarle la función de clic
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener("click", function() {
+                    
+                    // 1. Quitar el borde azul (clase 'active') de todas las miniaturas
+                    thumbnails.forEach(t => t.classList.remove("active"));
+                    
+                    // 2. Agregar el borde azul SOLO a la que acabamos de hacer clic
+                    this.classList.add("active");
+                    
+                    // 3. Tomar la ruta de la imagen que está oculta en "data-image"
+                    const newImageSrc = this.getAttribute("data-image");
+                    
+                    // 4. Cambiar la imagen grande con una transición suave
+                    mainImage.style.opacity = 0; // Se desvanece
+                    
+                    setTimeout(() => {
+                        mainImage.src = newImageSrc; // Cambia la foto
+                        mainImage.style.opacity = 1; // Aparece suavemente la nueva
+                    }, 150); // El cambio ocurre en 150 milisegundos
+                });
+            });
+        });
+    </script>
+</body>
+</html>

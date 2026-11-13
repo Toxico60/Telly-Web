@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipo - Telly</title>
+    <link href="https://fonts.googleapis.com/css2?family=Coiny&family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #2E3F55;
+            --accent-blue: #C6D9E4;
+            --card-blue: #4F7C8C;
+            --text-light: #F1ECE6;
+            --font-title: 'Coiny', cursive;
+            --font-body: 'Comfortaa', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--text-light);
+            color: var(--bg-dark);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-title);
+            font-weight: normal;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            background-color: var(--bg-dark);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        .btn-nav {
+            background-color: var(--accent-blue);
+            color: var(--bg-dark) !important;
+            padding: 10px 24px;
+            border-radius: 20px;
+            font-family: var(--font-title);
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+
+        .btn-nav:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- Hero Section Equipo --- */
+        .hero-team {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .hero-team h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+        }
+
+        .hero-team p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* --- Perfiles del Equipo --- */
+        .team-section {
+            padding: 60px 5%;
+            background-color: var(--text-light);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(46, 63, 85, 0.08);
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            transition: transform 0.3s;
+            border-top: 5px solid var(--accent-blue);
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-card-content {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .team-card h3 {
+            font-size: 1.25rem;
+            color: var(--bg-dark);
+            margin-bottom: 5px;
+            line-height: 1.2;
+            font-family: var(--font-body);
+            font-weight: 700;
+        }
+
+        .team-role {
+            font-size: 0.85rem;
+            color: var(--card-blue);
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .team-bio {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .team-social {
+            display: flex;
+            gap: 15px;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 15px;
+        }
+
+        .team-social svg {
+            width: 18px;
+            height: 18px;
+            fill: #a0aab5;
+            cursor: pointer;
+            transition: fill 0.2s;
+        }
+
+        .team-social svg:hover {
+            fill: var(--card-blue);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 40px 5%;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(241, 236, 230, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { display: none; }
+        }
+        @media (max-width: 600px) {
+            .team-grid { grid-template-columns: 1fr; }
+            .hero-team h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="index.html" class="logo-container">
+            <img src="Imagenes/Isotipo Telly.png" alt="Isotipo Telly" style="object-fit: contain; width: 45px; height: 45px;" onerror="this.onerror=null; this.src='Imagenes/Isotipo Telly.jpeg';">
+            <span style="font-family: var(--font-title); font-size: 24px; color: var(--text-light); letter-spacing: 2px;">TELLY</span>
+        </a>
+        
+        <div class="nav-links">
+            <a href="index.html#como-funciona">Cómo funciona</a>
+            <a href="index.html#beneficios">Beneficios</a>
+            <a href="equipo.html">Equipo</a>
+            <a href="cuenta.html">Mi Cuenta</a>
+            <a href="compra.html" class="btn-nav">Adquiere Telly</a>
+        </div>
+    </nav>
+
+    <!-- Hero Equipo -->
+    <section class="hero-team">
+        <h1>Conoce al equipo detrás de Telly</h1>
+        <p>Somos un equipo multidisciplinario apasionado por crear tecnología que respete el desarrollo infantil y brinde tranquilidad a las familias.</p>
+    </section>
+
+    <!-- Perfiles del Equipo -->
+    <section class="team-section">
+        <div class="team-grid">
+            
+            <!-- Miembro 1: Julieta -->
+            <div class="team-card">
+                <div class="team-card-content">
+                    <h3>Julieta Fernanda Buenfil Rejón</h3>
+                    <div class="team-role">Diseñadora Gráfica</div>
+                    <p class="team-bio">Encargada de dar vida a la identidad visual de Telly. Especialista en branding corporativo, se asegura de que cada color y tipografía transmita la calma y seguridad que los niños necesitan.</p>
+                    <div class="team-social">
+                        <svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.312h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Miembro 2: Raúl -->
+            <div class="team-card">
+                <div class="team-card-content">
+                    <h3>Raúl Fernando Peniche Urgel</h3>
+                    <div class="team-role">Diseñador Industrial</div>
+                    <p class="team-bio">Especialista en modelado 3D e impresión. Responsable de transformar el concepto en un producto tangible, ergonómico y seguro para el entorno y las manos infantiles.</p>
+                    <div class="team-social">
+                        <svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.312h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Miembro 3: Fabián -->
+            <div class="team-card">
+                <div class="team-card-content">
+                    <h3>Fabián Guzmán Sevilla</h3>
+                    <div class="team-role">Diseñador Multimedia / Web</div>
+                    <p class="team-bio">Creador de la experiencia web de Telly y arquitecto de los wireframes iniciales de la app, enfocándose en una navegación intuitiva y sin fricciones para los padres.</p>
+                    <div class="team-social">
+                        <svg viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Miembro 4: Ingrid -->
+            <div class="team-card">
+                <div class="team-card-content">
+                    <h3>Ingrid Berenice Aguirre León</h3>
+                    <div class="team-role">Diseñadora Multimedia</div>
+                    <p class="team-bio">Mente maestra detrás de la idea inicial del prototipo Telly. Desarrolladora de la versión final de la app, logrando una interfaz mágica y atractiva para los niños.</p>
+                    <div class="team-social">
+                        <svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.312h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div style="margin-bottom: 20px;">
+            <img src="Imagenes/Isotipo Telly.png" alt="Isotipo Telly" style="object-fit: contain; width: 30px; height: 30px; vertical-align: middle; margin-right: 10px;" onerror="this.onerror=null; this.src='Imagenes/Isotipo Telly.jpeg';">
+            <span style="font-family: var(--font-title); font-size: 20px; letter-spacing: 1px; vertical-align: middle;">TELLY</span>
+        </div>
+        <p>Menos pantallas, más sueños.</p>
+        <div style="margin-top: 20px;">
+            <a href="equipo.html" style="color: var(--text-light); text-decoration: none; margin: 0 10px; font-size: 14px;">Equipo</a>
+            <a href="compra.html" style="color: var(--text-light); text-decoration: none; margin: 0 10px; font-size: 14px;">Adquiere Telly</a>
+        </div>
+        <p style="margin-top: 20px; opacity: 0.6; font-size: 12px;">© 2026 Telly. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
